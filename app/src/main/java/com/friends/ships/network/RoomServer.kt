@@ -195,8 +195,8 @@ class RoomServer(
                 val incoming = runCatching { WireJson.instance.decodeFromString<Packet>(line) }.getOrNull() ?: continue
                 handlePacket(peer, incoming)
             }
-        } catch (_: CancellationException) {
-            throw
+        } catch (e: CancellationException) {
+            throw e
         } catch (_: Exception) {
             // A disconnected socket is handled below and can reconnect with the stable player id.
         } finally {
